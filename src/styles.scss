@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "PrimaryFont";
+    src: url("../public/assets/fonts/Karla-SemiBold.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+html, body, header, footer, main, article, aside, p {  
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body { 
+    font-family: "PrimaryFont";
+}
