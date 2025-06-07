@@ -1,18 +1,36 @@
 <header>
-  <!-- <img width="100%" src="/assets/green-grass-texture-xs.png" alt="..."/> -->
+  <nav class="navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="home">
+        <!-- <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> -->
+        <span class="brand-name">Impact Football Club</span>
+      </a>
+      <div class="navigation">
+
+        <ul>
+          <li>
+            <a [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" routerLink="home">Accueil</a>
+          </li>
+          <li>
+            <a [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" routerLink="championship">Championnat</a>
+          </li>
+          <li>
+            <a [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" routerLink="team">Equipe</a>
+          </li>
+        </ul>
+       
+      </div>
+    </div>
+  </nav>
 </header>
 <main>
 
-  <div id="welcome">
+  <div class="container">
 
-    <h1 style="text-align: center;">Bienvenue sur la plateforme de l'équipe IFC</h1>
-    <hr>
-    <h3>En cours de développement...</h3>
-    <br>
-    <h5>A bientôt.</h5>
-
+    <router-outlet></router-outlet>
+    
   </div>
-  <router-outlet />
+
 </main>
 <footer>
 
