@@ -1,19 +1,76 @@
 <div class="row">
     
-    <div class="col">
+    
 
         <div class="content-center">
-            <h1>Bienvenue sur la partie dédiée au Championnat FLA</h1>
-            <div class="card">
-                <p class="in-dev">
-                    En cours de développement...
-                </p>
-                
+            <div class="content-panel">
+                <div class="content-list">
+                    <h3>Rencontres IFC du championnat FLA</h3>
+                    <h4>Saison 2024-2025</h4>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Lieu</th>
+                                <th>Locaux</th>
+                                <th>Score</th>
+                                <th>Visiteurs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="content-form">
+                    <h5>Ajouter un match</h5>
+                    <form [formGroup]="gameForm" (ngSubmit)="gameOnSubmit()">
+                        <div class="form-item">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" id="date" class="form-control form-control-sm" formControlName="date"/>
+                        </div>
+                        <div class="form-item">
+                            <label for="start_at" class="form-label">Coup d'envoi</label>
+                            <input type="time" id="start_at" class="form-control form-control-sm" formControlName="start_at"/>
+                        </div>
+                        <div class="form-item">
+                            <label for="stadium_location" class="form-label">Lieu</label>
+                            <input type="text" id="stadium_location" class="form-control form-control-sm" formControlName="stadium_location"/>
+                        </div>
+                        <div class="form-item">
+                            <label for="local_team_name" class="form-label">Locaux</label>
+                            <input type="text" id="local_team_name" class="form-control form-control-sm" formControlName="local_team_name"/>
+                        </div>
+                        <div class="form-item">
+                            <label for="nb_local_goals" class="form-label">Nb de buts</label>
+                            <input type="number" id="nb_visitor_goals" class="form-control form-control-sm" formControlName="nb_local_goals"/>
+                        </div>
+                        <div class="form-item">
+                            <label for="visitor_team_name" class="form-label">Visiteurs</label>
+                            <input type="text" id="visitor_team_name" class="form-control form-control-sm" formControlName="visitor_team_name"/>
+                        </div>
+                        <div class="form-item">
+                            <label for="nb_visitor_goals" class="form-label">Nb de buts</label>
+                            <input type="number" id="nb_visitor_goals" class="form-control form-control-sm" formControlName="nb_visitor_goals"/>
+                        </div>
+                        <hr>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-sm btn-success">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <br>
-            A bientôt.
+            
+            
         </div>
       
-    </div>
+   
     
 </div>

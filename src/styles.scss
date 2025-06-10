@@ -24,6 +24,30 @@ html, body {
     justify-content: space-evenly;
     align-items: center;
 }
+.content-panel {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-gap: 0.8rem;
+    .content-list {
+        font-size: smaller;
+    }
+    .content-form {
+        padding: 0 .25em .5em .25em;
+        font-size: x-small;
+        background-color:whitesmoke;
+        border-radius: 0.5rem;
+
+        h5 {
+            font-style: italic;
+            text-align:center;
+        }
+
+        .form-submit {
+            padding: 0 0.25em;
+            text-align: right;
+        }
+    }
+}
 .in-dev {
     margin:0; font-size: 22px;padding: 16px
 }
