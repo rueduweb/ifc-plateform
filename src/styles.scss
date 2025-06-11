@@ -28,10 +28,10 @@ html, body {
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-gap: 0.8rem;
-    .content-list {
+    .content-left {
         font-size: smaller;
     }
-    .content-form {
+    .content-right {
         padding: 0 .25em .5em .25em;
         font-size: x-small;
         background-color:whitesmoke;

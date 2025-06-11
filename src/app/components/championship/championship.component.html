@@ -1,76 +1,118 @@
 <div class="row">
-    
-    
+    <div class="content-center">
+        <div class="content-panel">
+            <div class="content-left">
+                <h3>Rencontres IFC du championnat FLA</h3>
+                <h4>Saison 2024-2025</h4>
 
-        <div class="content-center">
-            <div class="content-panel">
-                <div class="content-list">
-                    <h3>Rencontres IFC du championnat FLA</h3>
-                    <h4>Saison 2024-2025</h4>
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Lieu</th>
-                                <th>Locaux</th>
-                                <th>Score</th>
-                                <th>Visiteurs</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="content-form">
-                    <h5>Ajouter un match</h5>
-                    <form [formGroup]="gameForm" (ngSubmit)="gameOnSubmit()">
-                        <div class="form-item">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" id="date" class="form-control form-control-sm" formControlName="date"/>
-                        </div>
-                        <div class="form-item">
-                            <label for="start_at" class="form-label">Coup d'envoi</label>
-                            <input type="time" id="start_at" class="form-control form-control-sm" formControlName="start_at"/>
-                        </div>
-                        <div class="form-item">
-                            <label for="stadium_location" class="form-label">Lieu</label>
-                            <input type="text" id="stadium_location" class="form-control form-control-sm" formControlName="stadium_location"/>
-                        </div>
-                        <div class="form-item">
-                            <label for="local_team_name" class="form-label">Locaux</label>
-                            <input type="text" id="local_team_name" class="form-control form-control-sm" formControlName="local_team_name"/>
-                        </div>
-                        <div class="form-item">
-                            <label for="nb_local_goals" class="form-label">Nb de buts</label>
-                            <input type="number" id="nb_visitor_goals" class="form-control form-control-sm" formControlName="nb_local_goals"/>
-                        </div>
-                        <div class="form-item">
-                            <label for="visitor_team_name" class="form-label">Visiteurs</label>
-                            <input type="text" id="visitor_team_name" class="form-control form-control-sm" formControlName="visitor_team_name"/>
-                        </div>
-                        <div class="form-item">
-                            <label for="nb_visitor_goals" class="form-label">Nb de buts</label>
-                            <input type="number" id="nb_visitor_goals" class="form-control form-control-sm" formControlName="nb_visitor_goals"/>
-                        </div>
-                        <hr>
-                        <div class="form-submit">
-                            <button type="submit" class="btn btn-sm btn-success">Ajouter</button>
-                        </div>
-                    </form>
-                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Lieu</th>
+                            <th>Locaux</th>
+                            <th>Score</th>
+                            <th>Visiteurs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(game of gameList(); track game.id){<tr>
+                            <td>{{game.date}}</td>
+                            <td>{{game.start_at}}</td>
+                            <td>{{game.local_team_name}}</td>
+                            <td>{{game.nb_local_goals}} - {{game.nb_visitor_goals}}</td>
+                            <td>{{game.visitor_team_name}}</td>
+                        </tr>}
+                    </tbody>
+                </table>
             </div>
-            
-            
-        </div>
-      
-   
-    
+            <div class="content-right">
+                <h5>Ajouter un match</h5>
+                <form [formGroup]="gameForm" (ngSubmit)="gameOnSubmit()">
+                    <div class="form-item">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" id="date" class="form-control form-control-sm" formControlName="date"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.date)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.date)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.date.hasError('required')){<ng-container>
+                                La date est obligatoire.
+                            </ng-container>}
+                        </small>}
+                    </div>
+                    <div class="form-item">
+                        <label for="start_at" class="form-label">Coup d'envoi</label>
+                        <input type="time" id="start_at" class="form-control form-control-sm" formControlName="start_at"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.start_at)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.start_at)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.start_at.hasError('required')){<ng-container>
+                                Le coup d'envoi est obligatoire.
+                            </ng-container>}
+                        </small>}
+                    </div>
+                    <div class="form-item">
+                        <label for="stadium_location" class="form-label">Lieu</label>
+                        <input type="text" id="stadium_location" class="form-control form-control-sm" formControlName="stadium_location"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.stadium_location)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.stadium_location)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.stadium_location.hasError('required')){<ng-container>
+                                Le lieu est obligatoire.
+                            </ng-container>}
+                        </small>}    
+                    </div>
+                    <div class="form-item">
+                        <label for="local_team_name" class="form-label">Locaux</label>
+                        <input type="text" id="local_team_name" class="form-control form-control-sm" formControlName="local_team_name"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.local_team_name)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.local_team_name)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.local_team_name.hasError('required')){<ng-container>
+                                Le nom d'équipe est obligatoire.
+                            </ng-container>}
+                        </small>}
+                    </div>
+                    <div class="form-item">
+                        <label for="nb_local_goals" class="form-label">Nb de buts</label>
+                        <input type="number" id="nb_local_goals" class="form-control form-control-sm" formControlName="nb_local_goals"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.nb_local_goals)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.nb_local_goals)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.nb_local_goals.hasError('required')){<ng-container>
+                                Le nombre de but est obligatoire.
+                            </ng-container>}
+                        </small>}
+                    </div>
+                    <div class="form-item">
+                        <label for="visitor_team_name" class="form-label">Visiteurs</label>
+                        <input type="text" id="visitor_team_name" class="form-control form-control-sm" formControlName="visitor_team_name"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.visitor_team_name)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.visitor_team_name)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.visitor_team_name.hasError('required')){<ng-container>
+                                Le nom d'équipe est obligatoire.
+                            </ng-container>}
+                        </small>}
+
+                    </div>
+                    <div class="form-item">
+                        <label for="nb_visitor_goals" class="form-label">Nb de buts</label>
+                        <input type="number" id="nb_visitor_goals" class="form-control form-control-sm" formControlName="nb_visitor_goals"
+                        [class.is-invalid]="touchOrDirtyInvalidAlert(gameForm.controls.nb_visitor_goals)"/>
+                         @if(touchOrDirtyInvalidAlert(gameForm.controls.nb_visitor_goals)){
+                        <small class="text-alert">
+                            @if(gameForm.controls.nb_visitor_goals.hasError('required')){<ng-container>
+                                Le nombre de but est obligatoire.
+                            </ng-container>}
+                        </small>}
+                    </div>
+                    <hr>
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-sm btn-success">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div> 
+    </div>
 </div>
