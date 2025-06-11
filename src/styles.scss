@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "bootstrap-icons/font/bootstrap-icons.css";
 @font-face {
     font-family: "PrimaryFont";
     src: url("../public/assets/fonts/Urbanist-Regular.ttf") format("truetype");
@@ -50,4 +51,9 @@ html, body {
 }
 .in-dev {
     margin:0; font-size: 22px;padding: 16px
+}
+.actions {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }

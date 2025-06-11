@@ -13,6 +13,7 @@
                             <th>Locaux</th>
                             <th>Score</th>
                             <th>Visiteurs</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,6 +23,13 @@
                             <td>{{game.local_team_name}}</td>
                             <td>{{game.nb_local_goals}} - {{game.nb_visitor_goals}}</td>
                             <td>{{game.visitor_team_name}}</td>
+                            <td>
+                                <div class="actions">
+                                    <button title="Retirer le match" class="btn btn-sm btn-danger" (click)="deleteGame(game.id)">
+                                        <i class="bi bi-x-square"></i>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>}
                     </tbody>
                 </table>

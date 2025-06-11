@@ -64,6 +64,11 @@ export class ChampionshipComponent {
     this.gameSrv.addAGame(newGame);
   }
 
+  deleteGame(id: string) {
+    this.gameSrv.deleteAGame(id);
+    this.gameList = this.gameSrv.gameItems;
+  }
+
   formatDate(aDate: string) {
     const date = new Date(aDate);
     const month = date.getMonth() < 10 ? '0'+(date.getMonth()+ 1) : date.getMonth()+ 1;
