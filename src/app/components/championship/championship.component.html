@@ -9,6 +9,7 @@
                     <thead>
                         <tr>
                             <th>Date</th>
+                            <th>Début</th>
                             <th>Lieu</th>
                             <th>Locaux</th>
                             <th>Score</th>
@@ -20,11 +21,15 @@
                         @for(game of gameList(); track game.id){<tr>
                             <td>{{game.date}}</td>
                             <td>{{game.start_at}}</td>
+                            <td>{{game.stadium_location}}</td>
                             <td>{{game.local_team_name}}</td>
                             <td>{{game.nb_local_goals}} - {{game.nb_visitor_goals}}</td>
                             <td>{{game.visitor_team_name}}</td>
                             <td>
                                 <div class="actions">
+                                    <button title="Modifier le match" class="btn btn-sm btn-primary" (click)="updateGame(game)">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
                                     <button title="Retirer le match" class="btn btn-sm btn-danger" (click)="deleteGame(game.id)">
                                         <i class="bi bi-x-square"></i>
                                     </button>
@@ -33,6 +38,56 @@
                         </tr>}
                     </tbody>
                 </table>
+                <!-- Modal -->
+                 <div class="modal" [style]="{'display': isModalOpen() ? 'block' : 'none'}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier le match : <span class="litle">{{gameUpdateForm.controls.id.value}}</span></h5>
+                                <button type="button" class="btn-close" aria-label="Close" (click)="closeModalOfGame()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="gameUpdateForm" (ngSubmit)="sendModifOnGame()">
+                                    <div class="form-item">
+                                        <input type="date" id="date" class="form-control form-control-sm"
+                                        formControlName="date" [value]="gameUpdateForm.controls.date.value"/>
+                                    </div>
+                                    <div class="form-item">   
+                                        <input type="time" id="start_at" class="form-control form-control-sm"
+                                        formControlName="start_at" [value]="gameUpdateForm.controls.start_at.value"/>
+                                    </div>
+                                    <div class="form-item">   
+                                        <input type="text" id="stadium_location" class="form-control form-control-sm"
+                                        formControlName="stadium_location" [value]="gameUpdateForm.controls.stadium_location.value"/>
+                                    </div>
+                                    <div class="form-item">   
+                                        <input type="text" id="local_team_name" class="form-control form-control-sm"
+                                        formControlName="local_team_name" [value]="gameUpdateForm.controls.local_team_name.value"/>
+                                    </div>
+                                    <div class="form-item">   
+                                        <input type="number" id="nb_local_goals" class="form-control form-control-sm"
+                                        formControlName="nb_local_goals" [value]="gameUpdateForm.controls.nb_local_goals.value"/>
+                                    </div>
+                                    <div class="form-item">   
+                                        <input type="text" id="visitor_team_name" class="form-control form-control-sm"
+                                        formControlName="visitor_team_name" [value]="gameUpdateForm.controls.visitor_team_name.value"/>
+                                    </div>
+                                    <div class="form-item">   
+                                        <input type="number" id="nb_visitor_goals" class="form-control form-control-sm"
+                                        formControlName="nb_visitor_goals" [value]="gameUpdateForm.controls.nb_visitor_goals.value"/>
+                                    </div>
+                                    <div class="modal-actions">
+                                        <button type="submit" class="btn btn-sm btn-primary">Enregistrer</button>
+                                    </div>   
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-secondary" (click)="closeModalOfGame()">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fin Modal -->
             </div>
             <div class="content-right">
                 <h5>Ajouter un match</h5>

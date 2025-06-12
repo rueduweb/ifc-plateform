@@ -17,6 +17,6 @@ export class GameService {
     this.gameItems.update((items) => items.filter(item => item.id !== gameId));
   }
   updateAGame(game: Game) {
-
+    this.gameItems.update((items) => items.map(item => item.id === game.id ? game : item));
   }
 }
