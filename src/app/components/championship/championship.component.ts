@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { Game } from '../../models/game';
 import { GameService } from '../../services/game.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-championship',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './championship.component.html',
   styleUrl: './championship.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -15,9 +16,18 @@ export class ChampionshipComponent {
 
   gameSrv = inject(GameService);
 
+  lastGames = this.gameSrv.lastGameItems;
+
   gameList = signal<Game[]>([]);
 
+  tabs: any = [
+    { id: 1, label: 'Saison 2025-2026' },
+    { id: 2, label: 'Saison 2024-2025' }
+  ]
+  tabSelected: number = 1;
+
   isModalOpen = signal(false);
+  isLastSeason = signal(false);
 
   // Add Game Form
   gameForm = new FormGroup({
@@ -117,6 +127,7 @@ export class ChampionshipComponent {
     this.gameList = this.gameSrv.gameItems;
   }
 
+  // ==== Modal actions ==== //
   openModalOfGame() {
     this.isModalOpen.set(true);
   }
@@ -126,6 +137,13 @@ export class ChampionshipComponent {
     this.isModalOpen.set(false);
   }
 
+  // ==== Manage Tabs ==== //
+  selectTab(tabId: number): void {
+    console.log('Tab selected : ', tabId);
+    this.tabSelected = tabId;
+    this.tabs[tabId]?.id === 2 ? this.isLastSeason.set(false) : this.isLastSeason.set(true);
+  }
+  // ==== Formats Date ==== //
   formatDate(aDate: string) { // yyyy-mm-dd to dd/mm/yyyy
     const date = new Date(aDate);
     const month = date.getMonth() < 10 ? '0'+(date.getMonth()+ 1) : date.getMonth()+ 1;
@@ -136,7 +154,6 @@ export class ChampionshipComponent {
   adaptFormatDateInput(aDate: string) { // dd/mm/yyyy to yyyy-mm-dd
     const date = aDate.split("/").reverse().join("/");
     const formatDateInput = date.replaceAll('/','-');
-    console.log('input date : ', formatDateInput);
     return formatDateInput;
   }
 

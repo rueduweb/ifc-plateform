@@ -35,7 +35,6 @@ html, body {
     .content-right {
         padding: 0 .25em .5em .25em;
         font-size: x-small;
-        background-color:whitesmoke;
         border-radius: 0.5rem;
 
         h5 {
@@ -48,6 +47,10 @@ html, body {
             text-align: right;
         }
     }
+}
+.aside-right {
+    padding: 0 .25em .5em .25em;
+    background-color:whitesmoke;
 }
 .in-dev {
     margin:0; font-size: 22px;padding: 16px
