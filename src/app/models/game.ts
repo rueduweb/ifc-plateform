@@ -5,6 +5,6 @@ export interface Game {
     stadium_location: string | null;
     local_team_name : string;
     visitor_team_name : string;
-    nb_local_goals: number | null;
-    nb_visitor_goals: number | null; 
+    nb_local_goals: number;
+    nb_visitor_goals: number; 
 }

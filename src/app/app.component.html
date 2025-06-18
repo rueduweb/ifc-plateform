@@ -25,10 +25,8 @@
 </header>
 <main>
 
-  <div class="container">
-
+  <div class="container" [@routeTransition]="route.snapshot.data">
     <router-outlet></router-outlet>
-    
   </div>
 
 </main>

@@ -5,6 +5,10 @@
                 <h3>Rencontres IFC du championnat FLA</h3>
 
                 <div class="tabs">
+                    @if(displaySearch()) {<div class="searchbar">
+                        <input type="search" id="search-filter" placeholder="Recherche..."
+                        class="form-control form-control-sm" [(ngModel)]="searchTerm"/>
+                    </div>}
                     <ul>
                     @for(tab of tabs; track tab.id) {
                         <li [ngClass]="{ active: tabSelected === tab.id }"
@@ -20,6 +24,7 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Date</th>
                                             <th>Début</th>
                                             <th>Lieu</th>
@@ -31,6 +36,7 @@
                                     </thead>
                                     <tbody>
                                         @for(game of gameList(); track game.id){<tr>
+                                            <td>{{$index+1}}</td>
                                             <td>{{game.date}}</td>
                                             <td>{{game.start_at}}</td>
                                             <td>{{game.stadium_location}}</td>
@@ -67,7 +73,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for(game of lastGames(); track game.id){<tr>
+                                        @for(game of lastGames() | searchfilter : searchTerm; track game.id){<tr>
                                             <td>{{game.id}}</td>
                                             <td>{{game.date}}</td>
                                             <td>{{game.start_at}}</td>

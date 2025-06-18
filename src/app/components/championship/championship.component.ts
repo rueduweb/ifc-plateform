@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { NgClass } from '@angular/common';
 import { Game } from '../../models/game';
 import { GameService } from '../../services/game.service';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
+import { SearchfilterPipe } from '../../pipes/searchfilter.pipe';
 
 @Component({
   selector: 'app-championship',
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, FormsModule, SearchfilterPipe],
   templateUrl: './championship.component.html',
   styleUrl: './championship.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,6 +29,9 @@ export class ChampionshipComponent {
 
   isModalOpen = signal(false);
   isLastSeason = signal(false);
+  displaySearch = signal(false);
+
+  searchTerm: string = '';
 
   // Add Game Form
   gameForm = new FormGroup({
@@ -141,7 +145,14 @@ export class ChampionshipComponent {
   selectTab(tabId: number): void {
     console.log('Tab selected : ', tabId);
     this.tabSelected = tabId;
-    this.tabs[tabId]?.id === 2 ? this.isLastSeason.set(false) : this.isLastSeason.set(true);
+
+    if(this.tabs[tabId]?.id === 2) {
+      this.isLastSeason.set(false);
+      this.displaySearch.set(false);
+    } else {
+      this.isLastSeason.set(true);
+      this.displaySearch.set(true);
+    }
   }
   // ==== Formats Date ==== //
   formatDate(aDate: string) { // yyyy-mm-dd to dd/mm/yyyy
