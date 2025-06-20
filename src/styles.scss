@@ -14,6 +14,11 @@ html, body, header, footer, main, article, aside, p, ul, li {
 html, body { 
     font-family: "PrimaryFont" !important;
 }
+.content-area {
+    position: relative;
+    width: 100%;
+    height: 54vh;
+}
 .content-center {
     position: absolute;
     top: 50%;

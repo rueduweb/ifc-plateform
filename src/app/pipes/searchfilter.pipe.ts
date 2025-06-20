@@ -13,7 +13,7 @@ export class SearchfilterPipe implements PipeTransform {
 		}
    
 		return items.filter((item: Game) => 
-      item.date?.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+      item.date?.toString().toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
       item.start_at?.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
 			item.stadium_location?.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
 			item.local_team_name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) ||

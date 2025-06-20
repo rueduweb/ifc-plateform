@@ -1,19 +1,38 @@
+<div class="row mt-3">
+<h1>Vous êtes dans les coulisses !</h1>   
+</div>
 <div class="row">
     
-    <div class="col">
-
-        <div class="content-center">
-            <h1>Partie dédiée aux informations sur l'équipe IFC</h1>
+    <div class="col-4 shadow-sm p-3 mb-5 bg-body rounded">
+        <hr>
+        <div class="content-area">
+            <h2>Partie dédiée aux informations du bureau et son fonctionnement</h2>
             <div class="card">
-                <p class="in-dev">
-                    En cours de développement...
-                </p>
-                
+                <app-staff></app-staff>   
             </div>
-            <br>
-            A bientôt.
-        </div>
-      
+        </div>      
+    </div>
+    <div class="col-4 shadow-sm p-3 mb-5 bg-body rounded">
+        <hr>
+        <div class="content-area">
+            <h2>Partie dédiée aux informations sur les joueurs inscrits</h2>
+            <div class="card">      
+                <app-players></app-players>       
+            </div>
+        </div>       
+    </div>
+    <div class="col-4 shadow-sm p-3 mb-5 bg-body rounded">
+        <hr>
+        <div class="content-area">
+            <h2>Partie dédiée aux supports médias des événements</h2>
+            <div class="card">   
+                <app-media></app-media>      
+            </div>
+        </div>      
+    </div>
+    
+    <div class="bottom-info">
+        <h3>A bientôt.</h3>
     </div>
     
 </div>

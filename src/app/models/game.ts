@@ -1,6 +1,6 @@
 export interface Game {
     id: string;
-    date: string | null;
+    date: Date;
     start_at: string | null;
     stadium_location: string | null;
     local_team_name : string;
