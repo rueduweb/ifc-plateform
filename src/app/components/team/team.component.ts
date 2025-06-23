@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { StaffComponent } from "./staff/staff.component";
-import { PlayersComponent } from "./players/players.component";
-import { MediaComponent } from "./media/media.component";
+import { Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, RouterModule, ActivatedRoute } from '@angular/router';
+import { routeTransition } from '../../transitions/route-transition';
 @Component({
   selector: 'app-team',
-  imports: [StaffComponent, PlayersComponent, MediaComponent],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet, RouterModule],
+  animations: [routeTransition],
   templateUrl: './team.component.html',
   styleUrl: './team.component.scss'
 })
 export class TeamComponent {
-  
+  route = inject(ActivatedRoute);
 }

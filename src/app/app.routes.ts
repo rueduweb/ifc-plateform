@@ -20,7 +20,7 @@ export const routes: Routes = [
         path: 'team', component: TeamComponent,
         children: [
             { path: 'staff', component: StaffComponent },
-            { path: 'players', component: PlayersComponent },
+            { path: 'players', component: PlayersComponent},
             { path: 'media', component: MediaComponent }
         ]
     }

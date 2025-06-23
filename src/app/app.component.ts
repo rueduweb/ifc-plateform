@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet, RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet, RouterModule, Router } from '@angular/router';
 import { routeTransition } from './transitions/route-transition';
 @Component({
   selector: 'app-root',
@@ -13,5 +13,9 @@ export class AppComponent {
   menu = [
     'équipe', 'championnat', 'staff', 'partenaires', 'inside', 'contact'
   ];
+  router = inject(Router)
   constructor(protected route: ActivatedRoute) {}
+  goToTeam() {
+    this.router.navigate(['/team']);
+  }
 }
