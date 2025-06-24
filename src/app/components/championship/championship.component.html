@@ -2,10 +2,15 @@
     <div class="content-center">
         <div class="content-panel">
             <div class="content-left">
-                <h3>Rencontres IFC du championnat FLA</h3>
+                <h3>Saisons IFC en championnat FLA</h3>
 
                 <div class="tabs">
                     @if(displaySearch()) {<div class="searchbar">
+                        <pagination-controls (pageChange)="currentPage = $event"
+                        previousLabel="Préc"
+                        nextLabel="Suiv">
+                        </pagination-controls>
+                        &nbsp;&nbsp;
                         <input type="search" id="search-filter" placeholder="Recherche..."
                         class="form-control form-control-sm" [(ngModel)]="searchTerm"/>
                     </div>}
@@ -60,7 +65,7 @@
                             }
                             @case(tabs[1].id) {
                             <ng-container>
-                            <table class="table">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -82,7 +87,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for(game of lastGames() | searchfilter : searchTerm | sort : [sortByParam, sortDirection]; track game.id){<tr>
+                                        @for(game of lastGames() | searchfilter : searchTerm | sort : [sortByParam, sortDirection] | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; track game.id){<tr>
                                             <td>{{game.id}}</td>
                                             <td>{{game.date | date : 'dd/MM/yyyy'}}</td>
                                             <td>{{game.start_at}}</td>
@@ -237,7 +242,7 @@
                                     </ng-container>}
                                 </small>}
                             </div>
-                            <hr>
+                            <br>
                             <div class="form-submit">
                                 <button type="submit" class="btn btn-sm btn-secondary"><i class="bi bi-plus-square"></i></button>
                             </div>

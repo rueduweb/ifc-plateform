@@ -7,13 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { SearchfilterPipe } from '../../pipes/searchfilter.pipe';
 import { SortPipe } from '../../pipes/sort.pipe';
 import { DatePipe } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-championship',
   imports: [
-    ReactiveFormsModule, NgClass, FormsModule,
+    ReactiveFormsModule, NgClass, FormsModule, NgxPaginationModule,
     SearchfilterPipe, SortPipe, DatePipe
-  ],
+],
   templateUrl: './championship.component.html',
   styleUrl: './championship.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -27,8 +28,8 @@ export class ChampionshipComponent {
   gameList = signal<Game[]>([]);
 
   tabs: any = [
-    { id: 1, label: 'Saison 2025-2026' },
-    { id: 2, label: 'Saison 2024-2025' }
+    { id: 1, label: '2025-2026' },
+    { id: 2, label: '2024-2025' }
   ]
   tabSelected: number = 1;
 
@@ -40,6 +41,9 @@ export class ChampionshipComponent {
   sortByParam: string = '';
   sortDirection = 'asc';
   arrowDisplay = false;
+
+  itemsPerPage: number = 8;
+  currentPage: number = 1;
 
   // Add Game Form
   gameForm = new FormGroup({
@@ -174,4 +178,7 @@ export class ChampionshipComponent {
     }
   }
 
+  // change Page (Pagination)
+  
+  
 }
