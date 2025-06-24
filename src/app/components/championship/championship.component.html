@@ -6,7 +6,8 @@
 
                 <div class="tabs">
                     @if(displaySearch()) {<div class="searchbar">
-                        <pagination-controls (pageChange)="currentPage = $event"
+                        <pagination-controls
+                        (pageChange)="currentPage = $event"
                         previousLabel="Préc"
                         nextLabel="Suiv">
                         </pagination-controls>

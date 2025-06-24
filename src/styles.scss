@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap-icons/font/bootstrap-icons.css";
+
 @font-face {
     font-family: "PrimaryFont";
     src: url("../public/assets/fonts/Urbanist-Regular.ttf") format("truetype");
@@ -75,4 +76,8 @@ html, body {
     font-size: small;
     font-weight: bold;
     color: rgb(132, 44, 135);
+}
+// pagination Ngx bgcolor
+.ngx-pagination .current {
+    background: rgb(132, 44, 135) !important;
 }
