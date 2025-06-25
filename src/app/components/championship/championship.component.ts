@@ -177,8 +177,5 @@ export class ChampionshipComponent {
       this.arrowDisplay = false;
     }
   }
-
-  // change Page (Pagination)
-  
   
 }
