@@ -1,0 +1,14 @@
+<div class="slider-container">
+    @for( slide of slides; track slide.slideId){
+        <div class="slider-item" [ngClass]="{
+            'selected': slide.slideId === selectedIndex,
+            'prev': slide.slideId === selectedIndex - 1,
+            'next': slide.slideId === selectedIndex + 1,
+            'hideLeft': slide.slideId < selectedIndex - 1,
+            'hideRight': slide.slideId > selectedIndex + 1
+            }">
+            <img [src]="slide.slideImg" [alt]="slide.slideAlt" class="slider-img"
+            (panleft)="toPrev(slide.slideId)" (panright)="toNext(slide.slideId)"/>
+        </div>
+    }
+</div>

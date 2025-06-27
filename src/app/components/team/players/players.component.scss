@@ -27,7 +27,7 @@
 	position: absolute;
 	inset: 0 0 0 0;
 	transform:
-		rotateY(calc((var(--position) - 1) * (360 / var(--quantity))* 1deg))
+		rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg))
         translateZ(315px);
 }
 .slider-content .slider .item img {
