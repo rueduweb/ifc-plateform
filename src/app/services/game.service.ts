@@ -273,13 +273,13 @@ export class GameService {
 
   gameItems = signal<Game[]>([]);
 
-  addAGame(game: Game) {
+  addAGame(game: Game): void {
     this.gameItems.update((items) => [...items, game]);
   }
-  deleteAGame(gameId: string) {
+  deleteAGame(gameId: string): void {
     this.gameItems.update((items) => items.filter(item => item.id !== gameId));
   }
-  updateAGame(game: Game) {
+  updateAGame(game: Game): void {
     this.gameItems.update((items) => items.map(item => item.id === game.id ? game : item));
   }
 }

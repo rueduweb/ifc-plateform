@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './players.component.scss'
 })
 export class PlayersComponent {
-
+  
 }

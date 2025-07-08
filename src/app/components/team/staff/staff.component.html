@@ -1,10 +1,307 @@
 <div class="col shadow-sm p-3 mb-5 bg-body rounded">
     <div class="content-area">
-        <h2>Partie dédiée aux informations du bureau et son fonctionnement</h2>
-        <div class="card">
-            <p class="in-dev">
-                En cours de développement...
-            </p>  
+        <div class="tabs">
+            <ul>
+                @for(tab of tabs; track tab.id) {
+                    <li [ngClass]="{ active: tabSelected === tab.id }"
+                    (click)="selectTab(tab.id)">
+                    {{ tab.label }}
+                    </li>
+                }
+            </ul>
+            <div class="tab-content">
+                @switch(tabSelected) {
+                    @case(tabs[0].id) {
+                    <ng-container>
+                        <div class="row">
+                            <div class="col">
+                                <div class="content-center">
+                                    <h4>Espace dédié aux informations générales du bureau</h4>
+                                    <div class="card">
+                                        <p class="in-dev">
+                                            En cours de développement...
+                                        </p>    
+                                    </div>
+                                    <br>
+                                    A bientôt.
+                                </div>
+                            </div>    
+                        </div>
+                    </ng-container>}
+                    @case(tabs[1].id) {
+                    <ng-container>
+                            <h4>Gestion des licences FLA / Saison 2025-2026 (sans sauvegarde)</h4>
+                            <table class="table table-striped player-table">
+                                 <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Prénom</th>
+                                        <th>Nom</th>
+                                        <th>Téléphone</th>
+                                        <th>Email</th>
+                                        <th>Né le</th>
+                                        <th>Certificat Méd.</th>
+                                        <th>Licence</th>
+                                        <th>Paiement</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    @for(player of playerList(); track $index ){<tr>
+                                        <td class="tiny">{{$index+1}}</td>
+                                        <td class="tiny">{{player.firstname}}</td>
+                                        <td class="tiny">{{player?.lastname}}</td>
+                                        <td class="tiny">{{player?.phone}}</td>
+                                        <td class="tiny">{{player?.email}}</td>
+                                        <td class="tiny">{{player?.date_birth | date: 'dd/MM/yyyy'}}</td>
+                                        <td class="tiny">{{player?.med_certif | date: 'dd/MM/yyyy'}}</td>
+                                        <td class="tiny">
+                                            @if(player?.licence){<div class="licence-ok">
+                                               <span>OK</span>
+                                            </div>}
+                                            @else{<div>
+                                                <span>NOK</span>
+                                            </div>}
+                                        </td>
+                                        <td>
+                                            <ul class="amounts">
+                                            @for(regul of player?.regulations; track $index; let index = $index){
+                                               <li><span class="tiny">
+                                                ¤ Le {{regul.date_regul | date : 'dd/MM/yyyy'}} : {{regul.amount}} €
+                                                </span></li>
+                                            }  
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <div class="actions">
+                                                <button title="Modifier le joueur" class="btn btn-sm btn-outline-secondary" (click)="updatePlayer(player, player.regulations)">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                                <button title="Retirer le joueur" class="btn btn-sm btn-danger" (click)="deletePlayer(player.id)">
+                                                    <i class="bi bi-x-square"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>}
+                                 </tbody>   
+                            </table>          
+                            <!-- Modal -->
+    <div class="modal" [style]="{'display': isModalOpenPlayer() ? 'block' : 'none'}">
+        <div class="modal-dialog">
+            <form [formGroup]="playerUpdateForm" (ngSubmit)="sendModifOnPlayer()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier la fiche n° : <span class="litle">{{playerUpdateForm.get('id')?.value}}</span></h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="closeModalOfPlayer()"></button>
+                </div>
+                <div class="modal-body">
+    
+                    <div class="update-player-form">
+                        <div class="left-side">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Prénom</span>
+                                <input type="text" class="form-control" id="firstname"
+                                formControlName="firstname"
+                                [value]="playerUpdateForm.get('firstname')?.value">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Nom</span>
+                                <input type="text" class="form-control" id="lastname"
+                                formControlName="lastname"
+                                [value]="playerUpdateForm.get('lastname')?.value">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Tél.</span>
+                                <input type="text" class="form-control" id="phone"
+                                formControlName="phone"
+                                [value]="playerUpdateForm.get('phone')?.value">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Email</span>
+                                <input type="email" class="form-control" id="email"
+                                formControlName="email"
+                                [value]="playerUpdateForm.get('email')?.value">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Né le</span>
+                                <input type="date" class="form-control" id="date_birth"
+                                formControlName="date_birth"
+                                [value]="playerUpdateForm.get('date_birth')?.value">
+                            </div>
+                            <div class="mb-3">
+                                <label for="address" class="form-label tiny">Adresse</label>
+                                <textarea class="form-control form-control-sm tiny" id="address" rows="2"
+                                formControlName="address" [value]="playerUpdateForm.get('address')?.value"></textarea>
+                            </div>
+                        </div>
+                        <div class="right-side">
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Certif M.</span>
+                                <input type="date" class="form-control form-control-sm" id="med_certif"
+                                formControlName="med_certif"
+                                [value]="playerUpdateForm.get('med_certif')?.value">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Rang</span>
+                                <input type="text" class="form-control" id="rank"
+                                formControlName="rank"
+                                [value]="playerUpdateForm.get('rank')?.value">
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Poste</span>
+                                <input type="text" class="form-control" id="position"
+                                formControlName="position"
+                                [value]="playerUpdateForm.get('position')?.value">
+                            </div>
+                            <div class="licence-check">
+                                @if(playerUpdateForm.get('licence')?.value === true){<input type="checkbox" id="licence" class="form-check"
+                                formControlName="licence" checked="checked"/>}
+                                @else{<input type="checkbox" id="licence" class="form-check"
+                                formControlName="licence"/>}
+                                <label>Licence accordée</label>
+                            </div>
+                           
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text tiny">Paiement</span>
+                                <input readonly type="text" class="form-control"
+                                [ngClass]="{'ko': playerUpdateForm.get('current_regul')?.value === 0, 'pending': playerUpdateForm.get('current_regul')?.value > 0 && playerUpdateForm.get('current_regul')?.value < licencePrice, 'ok': playerUpdateForm.get('current_regul')?.value === licencePrice}"
+                                id="current_regul"
+                                formControlName="current_regul"
+                                [value]="playerUpdateForm.get('current_regul')?.value">
+                            </div>
+                            <!-- versement possible tant que le montant total est non atteint -->
+                            @if(playerUpdateForm.get('current_regul')?.value < licencePrice){
+                                <div class="input-group input-group-sm mb-3">
+                                    <span class="input-group-text tiny">Versement</span>
+                                    <input type="number" class="form-control" id="regulation"
+                                    formControlName="regulation"
+                                    [value]="playerUpdateForm.get('regulation')?.value">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="bi bi-floppy"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="closeModalOfPlayer()">Fermer</button>
+                </div>
+            </div>
+            </form>
+        </div> 
+    </div>
+    <!-- Fin MOdal -->
+                    </ng-container>}
+                    @case(tabs[2].id) {
+                    <ng-container>
+                        <form [formGroup]="subscribeForm" class="subscribe-form" (ngSubmit)="playerOnSubmit($event)">
+                            <div class="sf-left-side">
+                                <div class="sf-item">
+                                    <label for="firstname">Prénom:</label>
+                                    <input class="form-control form-control-sm" formControlName="firstname" type="text" id="firstname"
+                                    [class.is-invalid]="subscribeForm.get('firstname')?.invalid && (subscribeForm.get('firstname')?.dirty || subscribeForm.get('firstname')?.touched)"/>
+                                    <small class="text-alert">
+                                        @if(subscribeForm.get('firstname')?.touched && subscribeForm.get('firstname')?.getError('required')){
+                                        <ng-container>
+                                            Le prénom est obligatoire.
+                                        </ng-container>}
+                                    </small>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="lastname">Nom:</label>
+                                    <input class="form-control form-control-sm" formControlName="lastname" type="text" id="lastname"
+                                    [class.is-invalid]="subscribeForm.get('lastname')?.invalid && (subscribeForm.get('lastname')?.dirty || subscribeForm.get('lastname')?.touched)"/>
+                                    <small class="text-alert">
+                                        @if(subscribeForm.get('lastname')?.touched && subscribeForm.get('lastname')?.getError('required')){
+                                        <ng-container>
+                                            Le nom est obligatoire.
+                                        </ng-container>}
+                                    </small>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="phone">Tél:</label>
+                                    <input class="form-control form-control-sm" formControlName="phone" type="text" id="phone"/>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="email">Email:</label>
+                                    <input class="form-control form-control-sm" formControlName="email" type="text" id="email"/>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="address">Adresse:</label>
+                                    <input class="form-control form-control-sm" formControlName="address" type="text" id="address"/>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="date_birth">Date de naissance:</label>
+                                    <input class="form-control form-control-sm" formControlName="date_birth" type="date" id="date_birth"/>
+                                </div>
+                            </div>
+                            <div class="sf-right-side">
+                                <div class="sf-item">
+                                    <label for="med_certif">Certificat méd. le:</label>
+                                    <input class="form-control form-control-sm" formControlName="med_certif" type="date" id="med_certif"/>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="rank">Rang:</label>
+                                    <input class="form-control form-control-sm" formControlName="rank" type="text" id="rank"/>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="position">Poste:</label>
+                                    <input class="form-control form-control-sm" formControlName="position" type="text" id="position"/>
+                                </div>
+                                <div class="sf-item">
+                                    <label for="licence">Licence accordée:</label>
+                                    
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" formControlName="licence" id="licence">
+                                        <label class="form-check-label" >
+                                            OUI
+                                        </label>
+                                    </div>
+                                        
+                                </div>
+                                <div formArrayName="regulations">
+        
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="onAddRegul()">Ajouter un règlement</button>
+                                    
+                                    
+                                    @for(regul of regulations.controls; track $index; let index= $index){
+                                        <div class="sf-item">
+                                            <label>Versement n° {{index+1}}</label>
+                                            <button class="delete-item" (click)="deleteRegul(index)">x</button> 
+                                            <input type="number" id="regul-{{index}}"
+                                            class="form-control form-control-sm"
+                                            [formControlName]="index"/> 
+                                        </div>
+                                    }
+                                    
+                                </div>
+                                <div class="sf-item-right">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Enregistrer</button>
+                                </div>
+            
+                            </div>
+                        </form>
+                    </ng-container>}
+                    @case(tabs[3].id) {
+                    <ng-container>
+                        <div class="row">
+                            <div class="col">
+                                <div class="content-center">
+                                    <h4>Administration de la plateforme IFC</h4>
+                                    <div class="card">
+                                        <p class="in-dev">
+                                            En cours de développement...
+                                        </p>    
+                                    </div>
+                                    <br>
+                                    A bientôt.
+                                </div>
+                            </div>    
+                        </div>
+                    </ng-container>
+                    }
+                }
+            </div>
         </div>
     </div>      
 </div>

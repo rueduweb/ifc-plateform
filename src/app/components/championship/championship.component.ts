@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { Game } from '../../models/game';
 import { GameService } from '../../services/game.service';
 import { FormsModule, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 import { SearchfilterPipe } from '../../pipes/searchfilter.pipe';
 import { SortPipe } from '../../pipes/sort.pipe';
-import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
@@ -134,7 +133,7 @@ export class ChampionshipComponent {
         nb_visitor_goals: this.gameUpdateForm.controls.nb_visitor_goals.value
     };
     // méthode update du service GameService
-    this.gameSrv.updateAGame(updateGame)
+    this.gameSrv.updateAGame(updateGame);
     this.gameList = this.gameSrv.gameItems;
   }
 
